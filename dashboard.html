@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pemesanan Buku Online</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- NAVBAR BERSAMA -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-brand">
+                <span class="nav-brand-icon">📚</span>
+                <span>TokoBuku Edukasi</span>
+            </a>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="dashboard.html" class="active">🏠 Dashboard</a></li>
+                <li class="nav-item"><a href="stok.html">📦 Katalog & Stok</a></li>
+                <li class="nav-item"><a href="checkout.html">🛒 Pemesanan</a></li>
+                <li class="nav-item"><a href="tracking.html">🚚 Lacak Pengiriman</a></li>
+            </ul>
+            <div class="nav-user" id="navUserContainer">
+                <!-- Diisi dinamis oleh script.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main class="main-content">
+        <!-- HEADER HALAMAN -->
+        <div class="page-header">
+            <div>
+                <h1>👋 Selamat Datang, <span id="welcomeUserMsg" style="color: var(--primary);">Pengguna</span>!</h1>
+                <p>UTS Pemrograman Web 1 &bull; Portal Utama Manajemen &amp; Pemesanan Buku Online</p>
+            </div>
+            <div>
+                <a href="checkout.html" class="btn btn-primary">
+                    🛒 Buat Pesanan Baru
+                </a>
+            </div>
+        </div>
+
+        <!-- STATISTIK RINGKASAN -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">📖</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statTotalJudul">0</div>
+                    <div class="stat-label">Total Judul Buku</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">📦</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statTotalStok">0</div>
+                    <div class="stat-label">Total Stok Tersedia</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon amber">👥</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statTotalUsers">0</div>
+                    <div class="stat-label">Pengguna Terdaftar</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">🚚</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statTotalDO">0</div>
+                    <div class="stat-label">Nomor DO Terdata</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGASI KE SELURUH HALAMAN (MENU UTAMA) -->
+        <div class="card">
+            <h2 class="card-title">🧭 Navigasi Menu Aplikasi</h2>
+            <p style="color: var(--gray-600); font-size: 0.9rem; margin-bottom: 1.25rem;">
+                Akses cepat menuju semua modul dan halaman dalam sistem pemesanan buku online ini:
+            </p>
+            <div class="nav-card-grid">
+                <!-- Menu 1: Stok -->
+                <a href="stok.html" class="nav-card">
+                    <div>
+                        <div class="nav-card-header">
+                            <span class="nav-card-icon">📦</span>
+                            <div>
+                                <h3>Katalog &amp; Stok</h3>
+                                <span style="font-size: 0.75rem; color: var(--secondary); font-weight: 600;">Modul Inventaris</span>
+                            </div>
+                        </div>
+                        <p>Lihat katalog seluruh buku secara dinamis, periksa sisa ketersediaan stok, dan lakukan penambahan stok buku.</p>
+                    </div>
+                    <div class="nav-card-action">
+                        Buka Katalog &amp; Stok &rarr;
+                    </div>
+                </a>
+
+                <!-- Menu 2: Checkout -->
+                <a href="checkout.html" class="nav-card">
+                    <div>
+                        <div class="nav-card-header">
+                            <span class="nav-card-icon">🛒</span>
+                            <div>
+                                <h3>Pemesanan &amp; Checkout</h3>
+                                <span style="font-size: 0.75rem; color: var(--success); font-weight: 600;">Modul Transaksi</span>
+                            </div>
+                        </div>
+                        <p>Pilih buku yang diinginkan, kelola keranjang belanja, isi formulir pembeli, dan konfirmasi pemesanan buku.</p>
+                    </div>
+                    <div class="nav-card-action">
+                        Ke Form Pemesanan &rarr;
+                    </div>
+                </a>
+
+                <!-- Menu 3: Tracking -->
+                <a href="tracking.html" class="nav-card">
+                    <div>
+                        <div class="nav-card-header">
+                            <span class="nav-card-icon">🚚</span>
+                            <div>
+                                <h3>Lacak Pengiriman</h3>
+                                <span style="font-size: 0.75rem; color: var(--accent); font-weight: 600;">Modul Tracking DO</span>
+                            </div>
+                        </div>
+                        <p>Lacak status pengiriman buku pesanan berdasarkan Nomor Delivery Order (DO) dengan visual timeline lengkap.</p>
+                    </div>
+                    <div class="nav-card-action">
+                        Lacak Pesanan &rarr;
+                    </div>
+                </a>
+
+                <!-- Menu 4: Ganti Akun / Logout -->
+                <a href="javascript:void(0)" onclick="logoutUser()" class="nav-card">
+                    <div>
+                        <div class="nav-card-header">
+                            <span class="nav-card-icon">🚪</span>
+                            <div>
+                                <h3>Ganti Akun / Logout</h3>
+                                <span style="font-size: 0.75rem; color: var(--danger); font-weight: 600;">Autentikasi</span>
+                            </div>
+                        </div>
+                        <p>Keluar dari sesi saat ini dan kembali ke halaman login untuk berganti akun pengguna atau admin.</p>
+                    </div>
+                    <div class="nav-card-action" style="color: var(--danger);">
+                        Keluar Akun &rarr;
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- REKOMENDASI / BUKU PILIHAN -->
+        <div style="margin-top: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--gray-900);">📚 Rekomendasi Buku Pilihan</h2>
+                <a href="stok.html" style="color: var(--primary); text-decoration: none; font-size: 0.88rem; font-weight: 600;">
+                    Lihat Semua Buku &rarr;
+                </a>
+            </div>
+            <div class="catalog-grid" id="featuredBooksContainer">
+                <!-- Diisi dinamis oleh script.js -->
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2026 TokoBuku Edukasi &bull; Proyek UTS Pemrograman Web 1</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initDashboardPage();
+        });
+    </script>
+</body>
+</html>
+

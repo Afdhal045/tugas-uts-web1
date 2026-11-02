@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pemesanan Buku Online</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page-body">
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-logo">📚</div>
+            <h2>Portal Buku Online</h2>
+            <p>UTS Pemrograman Web 1 - Sistem Pemesanan Buku</p>
+        </div>
+
+        <div id="loginAlert" class="alert" style="display: none;"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail" class="form-label">Email Pengguna <span class="required">*</span></label>
+                <input type="email" id="loginEmail" class="form-control" placeholder="nama@gmail.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="loginPassword" class="form-label">Kata Sandi <span class="required">*</span></label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan kata sandi" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 1rem;">
+                🚀 Masuk ke Aplikasi
+            </button>
+        </form>
+
+        <div class="demo-credentials-box">
+            <h4>💡 Akun Pengujian (dataPengguna):</h4>
+            <p style="color: var(--gray-600); font-size: 0.78rem; margin-bottom: 0.5rem;">Klik salah satu tombol di bawah untuk mengisi otomatis form login:</p>
+            <div class="demo-btn-group">
+                <button type="button" class="btn btn-sm btn-secondary" onclick="fillDemoAccount('rina@gmail.com', 'rina123')">
+                    👤 Rina (User)
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="fillDemoAccount('agus@gmail.com', 'agus123')">
+                    👤 Agus (User)
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="fillDemoAccount('siti@gmail.com', 'siti123')">
+                    🛡️ Siti (Admin)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data dan Script Logic -->
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initLoginPage();
+        });
+    </script>
+</body>
+</html>
+

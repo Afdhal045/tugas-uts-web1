@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemesanan & Checkout - Pemesanan Buku Online</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- NAVBAR BERSAMA -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-brand">
+                <span class="nav-brand-icon">📚</span>
+                <span>TokoBuku Edukasi</span>
+            </a>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li class="nav-item"><a href="stok.html">📦 Katalog &amp; Stok</a></li>
+                <li class="nav-item"><a href="checkout.html" class="active">🛒 Pemesanan</a></li>
+                <li class="nav-item"><a href="tracking.html">🚚 Lacak Pengiriman</a></li>
+            </ul>
+            <div class="nav-user" id="navUserContainer">
+                <!-- Diisi dinamis oleh script.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main class="main-content">
+        <!-- HEADER HALAMAN -->
+        <div class="page-header">
+            <div>
+                <h1>🛒 Formulir Pemesanan &amp; Checkout</h1>
+                <p>Tinjau daftar buku pesanan Anda dan lengkapi data pembeli untuk memproses pengiriman.</p>
+            </div>
+            <div>
+                <a href="stok.html" class="btn btn-outline">
+                    ➕ Tambah Buku Lain dari Katalog
+                </a>
+            </div>
+        </div>
+
+        <div class="checkout-layout">
+            <!-- KOLOM KIRI: DAFTAR PESANAN -->
+            <div>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h2 class="card-title" style="margin-bottom: 0;">
+                            📋 Daftar Pesanan Buku (<span id="checkoutItemCountBadge">0</span>)
+                        </h2>
+                    </div>
+
+                    <!-- Dropdown Tambah Cepat Buku -->
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+                        <select id="quickAddBukuSelect" class="form-control" style="font-size: 0.88rem;">
+                            <!-- Diisi dinamis oleh script.js -->
+                        </select>
+                        <button type="button" class="btn btn-sm btn-secondary" onclick="handleQuickAddBook()" style="white-space: nowrap;">
+                            ➕ Masukkan
+                        </button>
+                    </div>
+
+                    <!-- Item List Container -->
+                    <div id="checkoutItemsContainer">
+                        <!-- Diisi dinamis oleh script.js -->
+                    </div>
+
+                    <!-- Ringkasan Biaya -->
+                    <div style="margin-top: 1.5rem; background-color: var(--gray-100); padding: 1.2rem; border-radius: var(--radius-sm);">
+                        <div class="order-summary-row">
+                            <span>Subtotal Buku:</span>
+                            <span id="checkoutSubtotal" style="font-weight: 600;">Rp 0</span>
+                        </div>
+                        <div class="order-summary-row">
+                            <span>Biaya Pengiriman (Ekspedisi):</span>
+                            <span id="checkoutOngkir" style="font-weight: 600;">Rp 20.000</span>
+                        </div>
+                        <div class="order-summary-total">
+                            <span>Total Pembayaran:</span>
+                            <span id="checkoutTotal">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KOLOM KANAN: FORMULIR INFORMASI PEMBELI -->
+            <div>
+                <div class="card">
+                    <h2 class="card-title">👤 Informasi Pembeli &amp; Pengiriman</h2>
+                    <p style="color: var(--gray-600); font-size: 0.85rem; margin-bottom: 1.25rem;">
+                        Silakan isi data pengiriman dengan akurat.
+                    </p>
+
+                    <form id="formCheckout" novalidate>
+                        <!-- Nama Lengkap -->
+                        <div class="form-group">
+                            <label for="checkoutNama" class="form-label">Nama Lengkap Pembeli <span class="required">*</span></label>
+                            <input type="text" id="checkoutNama" class="form-control" placeholder="Contoh: Rina Wulandari" required>
+                            <span class="invalid-feedback"></span>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="checkoutEmail" class="form-label">Alamat Email <span class="required">*</span></label>
+                            <input type="email" id="checkoutEmail" class="form-control" placeholder="nama@gmail.com" required>
+                            <span class="invalid-feedback"></span>
+                        </div>
+
+                        <!-- Nomor Telepon -->
+                        <div class="form-group">
+                            <label for="checkoutTelepon" class="form-label">Nomor Telepon / WhatsApp <span class="required">*</span></label>
+                            <input type="tel" id="checkoutTelepon" class="form-control" placeholder="Contoh: 081234567890" value="081298765432" required>
+                            <span class="invalid-feedback"></span>
+                        </div>
+
+                        <!-- Alamat Pengiriman -->
+                        <div class="form-group">
+                            <label for="checkoutAlamat" class="form-label">Alamat Lengkap Pengiriman <span class="required">*</span></label>
+                            <textarea id="checkoutAlamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap (Jalan, No Rumah, RT/RW, Kecamatan, Kota/Kabupaten, Kode Pos)" required>Jl. Merdeka No. 45, Kecamatan Gambir, Jakarta Pusat 10110</textarea>
+                            <span class="invalid-feedback"></span>
+                        </div>
+
+                        <!-- Pilihan Ekspedisi -->
+                        <div class="form-group">
+                            <label for="checkoutEkspedisi" class="form-label">Jasa Ekspedisi / Kurir <span class="required">*</span></label>
+                            <select id="checkoutEkspedisi" class="form-control" required>
+                                <option value="JNE">JNE Express (Reguler)</option>
+                                <option value="Pos Indonesia">Pos Indonesia (Kilat Khusus)</option>
+                                <option value="SiCepat">SiCepat Express</option>
+                                <option value="J&amp;T Express">J&amp;T Express</option>
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+
+                        <!-- Metode Pembayaran -->
+                        <div class="form-group">
+                            <label for="checkoutPembayaran" class="form-label">Metode Pembayaran <span class="required">*</span></label>
+                            <select id="checkoutPembayaran" class="form-control" required>
+                                <option value="Transfer Bank BCA">Transfer Bank BCA</option>
+                                <option value="Transfer Bank Mandiri">Transfer Bank Mandiri</option>
+                                <option value="Transfer Bank BRI">Transfer Bank BRI</option>
+                                <option value="E-Wallet (GoPay / OVO / Dana)">E-Wallet (GoPay / OVO / Dana)</option>
+                                <option value="Cash on Delivery (COD)">Bayar di Tempat (COD)</option>
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 1rem;">
+                            🛍️ Konfirmasi &amp; Proses Pemesanan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL SUKSES PEMESANAN -->
+    <div class="modal-overlay" id="modalSuksesCheckout">
+        <div class="modal-card">
+            <div class="modal-header" style="background-color: #ecfdf5; border-bottom-color: #a7f3d0;">
+                <h3 style="color: #065f46;">🎉 Pemesanan Berhasil Dibuat!</h3>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--gray-700); margin-bottom: 1rem;">
+                    Terima kasih, pesanan buku Anda telah berhasil diproses oleh sistem.
+                </p>
+
+                <div style="background-color: var(--gray-100); padding: 1rem; border-radius: var(--radius-sm); border: 1px dashed var(--gray-300); margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: var(--gray-600); font-size: 0.88rem;">Nomor Delivery Order (DO):</span>
+                        <strong style="color: var(--primary); font-size: 1.1rem;" id="modalSuksesDO"></strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: var(--gray-600); font-size: 0.88rem;">Nama Penerima:</span>
+                        <strong id="modalSuksesNama"></strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color: var(--gray-600); font-size: 0.88rem;">Ekspedisi:</span>
+                        <span id="modalSuksesEkspedisi"></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--gray-300); padding-top: 0.5rem;">
+                        <span style="color: var(--gray-800); font-weight: 600;">Total Biaya:</span>
+                        <strong style="color: var(--primary);" id="modalSuksesTotal"></strong>
+                    </div>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--gray-600);">
+                    Simpan nomor DO di atas untuk memantau status perjalanan pengiriman buku Anda pada modul Pelacakan (Tracking).
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a href="dashboard.html" class="btn btn-secondary">Kembali ke Dashboard</a>
+                <button type="button" id="btnLacakPesananModal" class="btn btn-primary">
+                    🚚 Lacak Pengiriman Sekarang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2026 TokoBuku Edukasi &bull; Proyek UTS Pemrograman Web 1</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initCheckoutPage();
+        });
+    </script>
+</body>
+</html>
+

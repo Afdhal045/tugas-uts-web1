@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lacak Pengiriman - Pemesanan Buku Online</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- NAVBAR BERSAMA -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="dashboard.html" class="nav-brand">
+                <span class="nav-brand-icon">📚</span>
+                <span>TokoBuku Edukasi</span>
+            </a>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li class="nav-item"><a href="stok.html">📦 Katalog &amp; Stok</a></li>
+                <li class="nav-item"><a href="checkout.html">🛒 Pemesanan</a></li>
+                <li class="nav-item"><a href="tracking.html" class="active">🚚 Lacak Pengiriman</a></li>
+            </ul>
+            <div class="nav-user" id="navUserContainer">
+                <!-- Diisi dinamis oleh script.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main class="main-content">
+        <!-- HEADER HALAMAN -->
+        <div class="page-header">
+            <div>
+                <h1>🚚 Pelacakan Pengiriman Buku (Tracking DO)</h1>
+                <p>Pantau posisi paket buku Anda menggunakan Nomor Delivery Order (DO) dari dataTracking.</p>
+            </div>
+            <div>
+                <a href="dashboard.html" class="btn btn-secondary">
+                    🏠 Kembali ke Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- FORM PENCARIAN NOMOR DO -->
+        <div class="tracking-search-box">
+            <label for="inputNomorDO" class="form-label">Masukkan Nomor Delivery Order (DO):</label>
+            <div class="search-input-group">
+                <input type="text" id="inputNomorDO" class="form-control" placeholder="Contoh: 20230012, 20230013, atau DO pesanan baru..." style="font-size: 1rem;">
+                <button type="button" id="btnCariTracking" class="btn btn-primary" style="white-space: nowrap; padding: 0.65rem 1.5rem;">
+                    🔍 Lacak Paket
+                </button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">
+                <span style="font-size: 0.85rem; color: var(--gray-600); font-weight: 500;">Contoh data pengujian:</span>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="setSampleDO('20230012')">
+                    📌 DO: 20230012 (Rina Wulandari)
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="setSampleDO('20230013')">
+                    📌 DO: 20230013 (Agus Pranoto)
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTAINER PESAN JIKA DO TIDAK DITEMUKAN -->
+        <div id="trackingEmptyContainer" class="card" style="display: none;"></div>
+
+        <!-- CONTAINER HASIL PELACAKAN -->
+        <div id="trackingResultContainer" style="display: none;">
+            <div class="card">
+                <!-- GRID INFORMASI UTAMA PENGIRIMAN -->
+                <div class="tracking-info-grid">
+                    <div class="tracking-info-item">
+                        <div class="label">Nomor DO</div>
+                        <div class="value" id="trackDO">-</div>
+                    </div>
+                    <div class="tracking-info-item">
+                        <div class="label">Penerima</div>
+                        <div class="value" id="trackNama">-</div>
+                    </div>
+                    <div class="tracking-info-item">
+                        <div class="label">Status Pengiriman</div>
+                        <div style="margin-top: 0.35rem;">
+                            <span id="trackStatus" class="book-stock-badge stock-in">-</span>
+                        </div>
+                    </div>
+                    <div class="tracking-info-item">
+                        <div class="label">Ekspedisi</div>
+                        <div class="value" id="trackEkspedisi">-</div>
+                    </div>
+                    <div class="tracking-info-item">
+                        <div class="label">Tanggal Kirim</div>
+                        <div class="value" id="trackTanggal">-</div>
+                    </div>
+                    <div class="tracking-info-item">
+                        <div class="label">Kode Paket</div>
+                        <div class="value" id="trackPaket">-</div>
+                    </div>
+                    <div class="tracking-info-item">
+                        <div class="label">Total Pembayaran</div>
+                        <div class="value" id="trackTotal" style="color: var(--primary);">-</div>
+                    </div>
+                </div>
+
+                <!-- RIWAYAT PERJALANAN / TIMELINE -->
+                <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📍 Riwayat Perjalanan Paket
+                </h3>
+                <p style="color: var(--gray-600); font-size: 0.88rem; margin-bottom: 1.5rem;">
+                    Perkembangan status pengiriman paket buku secara kronologis:
+                </p>
+
+                <div class="timeline" id="trackingTimelineContainer">
+                    <!-- Diisi dinamis oleh script.js -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2026 TokoBuku Edukasi &bull; Proyek UTS Pemrograman Web 1</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initTrackingPage();
+        });
+    </script>
+</body>
+</html>
+
